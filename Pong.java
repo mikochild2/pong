@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import java.util.Random;
 import java.util.Timer;
 
+import javax.swing.JPanel;
+
 public class Pong extends Canvas
 {
 	Point delta;
@@ -53,6 +55,14 @@ public class Pong extends Canvas
 		g2.setColor(Color.blue);
 		g2.fill(paddle1);
 		g2.fill(paddle2);
+
+		Graphics2D g2d = (Graphics2D) g;
+
+		Font font = new Font("Serif", Font.BOLD, 50);
+		g2d.setFont(font);
+		g2d.setColor(Color.RED);
+
+		g.drawString("SCORE", 400, 100);
 	}
 
 	public void processKeyEvent(KeyEvent e)
