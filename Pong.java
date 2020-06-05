@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import java.util.Random;
 import java.util.Timer;
+import javax.swing.JButton;
 
 import javax.swing.JPanel;
 
@@ -16,7 +17,7 @@ public class Pong extends Canvas
 	int leftScore = 0;
 	int rightScore = 0;
 	boolean status;
-	String title;
+	String title = "SCORE";
 	String announcement;
 	
 	public static void main( String[] args )
@@ -39,14 +40,25 @@ public class Pong extends Canvas
 	public String winner(){
 		if (leftScore > rightScore){
 			announcement = "Left Wins!";
+			title = announcement;
 		}else if (rightScore > leftScore){
 			announcement = "Right Wins!";
-		} else {
-			announcement ="It's a tie!";
+			title = announcement;
+
 		}
+		//  else if (rightScore == leftScore){
+		// 	announcement ="It's a tie!";
+		// 	title = "GAME OVER. " + announcement;
+		// }  
 		return announcement;
 	}
+	
+	public void gameOver(Timer t){
+		if (status = false){
+			t.cancel();
+		}
 
+	}
 	public Pong()
 	{
 		enableEvents(java.awt.AWTEvent.KEY_EVENT_MASK);
@@ -58,19 +70,16 @@ public class Pong extends Canvas
 		paddle2 = new Rectangle(900,250,20,200);
 		
 		Timer t = new Timer(true);
-		if (status = true){
+				
 		t.schedule( new java.util.TimerTask()
 		{
 			public void run()
 			{
 				doStuff();
 				repaint();
-				title="SCORE";
+				gameOver(t);
 			}
-		}, 10, 10);
-		} else {
-			title="GAME OVER. "+announcement;
-		}
+		}, 10, 10);	
 
 	}
 
@@ -160,8 +169,16 @@ public class Pong extends Canvas
 			delta = new Point(-5,5);
 			rightScore++;
 		}
-		
-		
+
+		if (leftScore == 10){
+			status = false;
+			winner();
+		}
+
+		if (rightScore == 10){
+			status = false;
+			winner();
+		}
 		
 	}
 	
