@@ -13,6 +13,11 @@ public class Pong extends Canvas
 	Ellipse2D.Double ball;
 	Rectangle paddle1;
 	Rectangle paddle2;
+	int leftScore = 0;
+	int rightScore = 0;
+	boolean status;
+	String title;
+	String announcement;
 	
 	public static void main( String[] args )
 	{
@@ -21,6 +26,25 @@ public class Pong extends Canvas
 		win.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		win.add( new Pong() );
 		win.setVisible(true);
+	}
+
+	public boolean start(){
+		 return status = true;
+	}
+
+	public boolean stop(){
+		return status = false;
+	}
+
+	public String winner(){
+		if (leftScore > rightScore){
+			announcement = "Left Wins!";
+		}else if (rightScore > leftScore){
+			announcement = "Right Wins!";
+		} else {
+			announcement ="It's a tie!";
+		}
+		return announcement;
 	}
 
 	public Pong()
@@ -34,14 +58,19 @@ public class Pong extends Canvas
 		paddle2 = new Rectangle(900,250,20,200);
 		
 		Timer t = new Timer(true);
+		if (status = true){
 		t.schedule( new java.util.TimerTask()
 		{
 			public void run()
 			{
 				doStuff();
 				repaint();
+				title="SCORE";
 			}
 		}, 10, 10);
+		} else {
+			title="GAME OVER. "+announcement;
+		}
 
 	}
 
@@ -62,7 +91,16 @@ public class Pong extends Canvas
 		g2d.setFont(font);
 		g2d.setColor(Color.RED);
 
-		g.drawString("SCORE", 400, 100);
+		g.drawString(title, 400, 100);
+
+		Font font2 = new Font("Serif", Font.PLAIN, 22);
+
+
+		Graphics2D g2e = (Graphics2D) g;
+		g2e.setFont(font2);
+		g2e.setColor(Color.BLUE);
+		g.drawString("Left: "+leftScore, 400, 150);
+		g.drawString("Right: "+rightScore, 500, 150);
 	}
 
 	public void processKeyEvent(KeyEvent e)
@@ -112,8 +150,17 @@ public class Pong extends Canvas
 			ball.x = 500;
 			ball.y = 350;
 			delta = new Point(-5,5);
+			leftScore++;
 		}
-			
+
+		if ( ball.x < 10 )
+		{
+			ball.x = 500;
+			ball.y = 350;
+			delta = new Point(-5,5);
+			rightScore++;
+		}
+		
 		
 		
 	}
