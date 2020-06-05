@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JButton;
 
 import javax.swing.JPanel;
@@ -53,12 +55,7 @@ public class Pong extends Canvas
 		return announcement;
 	}
 	
-	public void gameOver(Timer t){
-		if (status = false){
-			t.cancel();
-		}
-
-	}
+	
 	public Pong()
 	{
 		enableEvents(java.awt.AWTEvent.KEY_EVENT_MASK);
@@ -69,17 +66,34 @@ public class Pong extends Canvas
 		paddle1 = new Rectangle(50,250,20,200);
 		paddle2 = new Rectangle(900,250,20,200);
 		
-		Timer t = new Timer(true);
-				
-		t.schedule( new java.util.TimerTask()
-		{
-			public void run()
-			{
+		Timer t = new Timer();
+		TimerTask tt = new TimerTask() {
+			@Override
+			public void run() {
 				doStuff();
 				repaint();
-				gameOver(t);
 			}
-		}, 10, 10);	
+		};
+		
+		start();		
+		//t.schedule( new java.util.TimerTask()
+		// if(status=true){
+			t.schedule(tt,10,10);
+		// } else {
+		// 	tt.cancel(); 
+		// 	leftScore = 0;
+		// 	rightScore = 0;
+		// 	status = true;
+		// }
+		
+		// {
+		// 	public void run()
+		// 	{
+		// 		doStuff();
+		// 		repaint();
+		// 	}
+		// }, 10, 10);	
+		
 
 	}
 
@@ -172,13 +186,24 @@ public class Pong extends Canvas
 
 		if (leftScore == 10){
 			status = false;
+			//rough way to stop the game on win. timer runs till complete. can't timer.cancel() if running
+			//already
+			ball.x = 500;
+			ball.y = 350;
+			delta = null;
 			winner();
 		}
 
 		if (rightScore == 10){
 			status = false;
+			//rough way to stop the game on win. timer runs till complete. can't timer.cancel() if running
+			//already
+			ball.x = 500;
+			ball.y = 350;
+			delta = null;
 			winner();
 		}
+		
 		
 	}
 	
