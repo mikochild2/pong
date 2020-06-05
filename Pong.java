@@ -172,7 +172,8 @@ public class Pong extends Canvas
 		{
 			ball.x = 500;
 			ball.y = 350;
-			delta = new Point(-5,5);
+			delta = new Point(5,-5);// x<10 has reversed new Point to x>1000 so the serve reverses on point
+			//win
 			leftScore++;
 		}
 
@@ -190,7 +191,7 @@ public class Pong extends Canvas
 			//already
 			ball.x = 500;
 			ball.y = 350;
-			delta = null;
+			//delta = null;
 			winner();
 		}
 
@@ -200,7 +201,7 @@ public class Pong extends Canvas
 			//already
 			ball.x = 500;
 			ball.y = 350;
-			delta = null;
+			//delta = null;
 			winner();
 		}
 		
